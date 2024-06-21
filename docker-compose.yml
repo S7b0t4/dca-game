@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend_dca
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    networks:
+      - dca-game-net
+
+  backend:
+    build:
+      context: ./backend
+    container_name: backend_dca
+    volumes:
+      - ./backend:/app
+      - assets_volume:/app/assets
+      - media_volume:/app/media
+    ports:
+      - "8000:8000"
+    networks:
+      - dca-game-net
+    depends_on:
+      - db
+      - redis
+    environment:
+      DJANGO_SUPERUSER_USERNAME: admin
+      DJANGO_SUPERUSER_EMAIL: webgoodsrv@gmail.com
+      DJANGO_SUPERUSER_PASSWORD: someSTRONGpwd123333
+    command: >
+      sh -c "
+      python manage.py migrate &&
+      python manage.py collectstatic --noinput &&
+      python manage.py createsuperuser --noinput --username $DJANGO_SUPERUSER_USERNAME --email $DJANGO_SUPERUSER_EMAIL || true &&
+      python manage.py runserver 0.0.0.0:8000
+      "
+
+  fastapi:
+    build:
+      context: ./fastapi
+    container_name: fastapi_dca
+    volumes:
+      - ./fastapi:/app
+    ports:
+      - "8001:8000"
+    networks:
+      - dca-game-net
+
+  db:
+    image: postgres:13
+    container_name: db_dca
+    environment:
+      POSTGRES_DB: dca_game_db
+      POSTGRES_USER: dca_game_user
+      POSTGRES_PASSWORD: jS>W]?DhN7An7(XJ
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - dca-game-net
+
+  redis:
+    image: redis:6
+    container_name: redis_dca
+    networks:
+      - dca-game-net
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_dca
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - assets_volume:/app/assets
+      - media_volume:/app/media
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
+      - fastapi
+    networks:
+      - dca-game-net
+
+networks:
+  dca-game-net:
+
+volumes:
+  postgres_data:
+  assets_volume:
+  media_volume:
