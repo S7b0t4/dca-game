@@ -1,0 +1,18 @@
+
+.rates_title{
+  font-size: 11px;
+  margin-bottom: 5px;
+}
+.rates_row{
+  padding: 10px;
+  border-radius: 10px;
+  background: #444444;
+}
+.rates_button{
+  padding: 10px;
+  border-radius: 10px;
+  background: #000000ab;
+}
+.rates_button:hover{
+  outline: #007CEF 2px solid;
+}

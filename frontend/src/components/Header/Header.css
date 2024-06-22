@@ -1,0 +1,62 @@
+header{
+  margin-bottom: 20px;
+}
+.header_row{
+  gap: 10px;
+}
+.header_user_hi{
+  font-size: 20px;
+}
+.header_row_item{
+  border-radius: 10px;
+  padding: 8px;
+}
+
+/* Balance */
+.header_row_balance{
+  line-height: 140%;
+  background: rgb(123,154,118);
+  background: linear-gradient(180deg, rgba(123,154,118,1) 0%, rgba(49,49,49,1) 100%);
+}
+.header_row_balance_wrapper{
+  flex-basis: 50%;
+}
+.balance_subtitle{
+  font-size: 12px;
+}
+.balance_amount{
+  font-size: 27px;
+}
+
+/* Balance button */
+.header_row_item_button_wrapper{
+  width: 50%;
+  background: rgb(115,115,115);
+  background: linear-gradient(180deg, rgba(115,115,115,1) 0%, rgba(65,65,65,1) 100%);
+  cursor: pointer;
+}
+
+.header_row_item_button_wrapper.blue{
+  border: blue 2px solid;
+}
+.header_row_item_button_wrapper.red{
+  border: red 2px solid;
+}
+
+.header_row_item_button_wrapper:hover{
+  border: white 2px solid;
+}
+.header_row_item_button{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.header_row_button_wrapper {
+  flex-basis: 50%;
+  display: flex;
+  gap: 10px;
+}
+.header_row_item_button_title{
+  font-size: 8px;
+}
